@@ -45,10 +45,11 @@ app.get('/callback', (req, res) => {
     .then(response => {
         if (response.status === 200) {
 
-            const { access_token } = response.data;
+            const { access_token,expires_in } = response.data;
 
             const queryParams = queryString.stringify({
-                access_token
+                access_token,
+                expires_in
             })
             
             //React app

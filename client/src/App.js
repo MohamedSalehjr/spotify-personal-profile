@@ -1,11 +1,12 @@
 import {useEffect, useState} from 'react'
-import {accessToken} from './spotify'
+import {getAccessToken, logout} from './spotify'
 import './App.css';
 
 function App() {
   const [token, setToken] = useState(null);
   useEffect(() => {
-    setToken(accessToken)
+    setToken(getAccessToken)
+    
   }, [])
 
   return (
@@ -18,7 +19,11 @@ function App() {
         >
           Login to Spotify
         </a>) : (
+          <>
           <h1>Logged in</h1>
+          <button onClick={logout}>log out</button>
+          </>
+          
         )
       
         }
