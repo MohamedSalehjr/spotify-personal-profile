@@ -1,11 +1,25 @@
 import {useEffect, useState} from 'react'
-import {getAccessToken, logout} from './spotify'
-import './App.css';
+import {getAccessToken, logout, getCurrentUserProfile} from './spotify'
+import { Routes, Route} from "react-router-dom"
+import Profile from "./components/Profile"
 
 function App() {
   const [token, setToken] = useState(null);
+  const [profile, setProfile] = useState(null)
+  
   useEffect(() => {
     setToken(getAccessToken)
+
+    const fetchData = async ( ) => {
+      try{
+        const {data} = await getCurrentUserProfile();
+        setProfile(data)
+        console.log(data)
+      } catch(err){
+        console.error(err);
+      }
+    }
+    fetchData();
     
   }, [])
 
@@ -13,15 +27,23 @@ function App() {
     <div className="App">
       {
         !token ?  (
-          <a
-          className="App-link"
+          <div className="flex items-center h-screen w-screen">
+          <a 
+          className="App-link text-xl h-24 rounded-full text-white px-16 py-8 bg-green-500 ml-auto mr-auto hover:bg-green-300"
           href="http://localhost:8888/login"
         >
           Login to Spotify
-        </a>) : (
+        </a>
+        </div>) : (
           <>
-          <h1>Logged in</h1>
-          <button onClick={logout}>log out</button>
+          {profile && (
+
+              <div>
+                <Profile profile={profile} />
+              </div>
+             
+            )}
+          
           </>
           
         )

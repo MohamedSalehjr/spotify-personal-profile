@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 // Map for localStorage keys
 const LOCALSTORAGE_KEYS = {
     accessToken: 'spotify_access_token',
@@ -66,3 +68,12 @@ export const getAccessToken = () => {
     }
     return false;
 };
+
+axios.defaults.baseURL = 'https://api.spotify.com/v1';
+axios.defaults.headers['Authorization'] = `Bearer ${getAccessToken()}`;
+axios.defaults.headers['Content-Type'] = 'application/json';
+
+export const getCurrentUserProfile = () => axios.get('/me');
+export const getCurrentUserPlaylists = (limit = 20) => {
+    return axios.get(`/me/playlists?limit=${limit}`);
+}
