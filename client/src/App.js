@@ -1,20 +1,29 @@
 import {useEffect, useState} from 'react'
-import {getAccessToken, logout, getCurrentUserProfile} from './spotify'
+import {getAccessToken, getCurrentUserProfile, getCurrentUserPlaylists, getTopArtists} from './spotify'
 import { Routes, Route} from "react-router-dom"
+import Artists from "./components/Artists"
 import Profile from "./components/Profile"
 
 function App() {
   const [token, setToken] = useState(null);
-  const [profile, setProfile] = useState(null)
+  const [profile, setProfile] = useState(null);
+  const [playlists, setPlaylists] = useState(null);
+  const [topArtists, setTopArtists] = useState(null);
   
   useEffect(() => {
     setToken(getAccessToken)
 
     const fetchData = async ( ) => {
       try{
-        const {data} = await getCurrentUserProfile();
-        setProfile(data)
-        console.log(data)
+        const userProfile = await getCurrentUserProfile();
+        setProfile(userProfile.data)
+
+        const userPlaylists= await getCurrentUserPlaylists();
+        setPlaylists(userPlaylists.data)
+
+        const userTopArtists = await getTopArtists();
+        setTopArtists(userTopArtists.data)
+      
       } catch(err){
         console.error(err);
       }
@@ -22,6 +31,7 @@ function App() {
     fetchData();
     
   }, [])
+
 
   return (
     <div className="App">
@@ -36,10 +46,12 @@ function App() {
         </a>
         </div>) : (
           <>
-          {profile && (
+          {(profile && playlists && topArtists) && (
 
               <div>
-                <Profile profile={profile} />
+                <Profile profile={profile} playlists={playlists}
+                 />
+                 <Artists artists={topArtists} />
               </div>
              
             )}
