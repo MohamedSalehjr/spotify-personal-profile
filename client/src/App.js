@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {getAccessToken, getCurrentUserProfile, getCurrentUserPlaylists, getTopArtists, getTopTracks} from './spotify'
+import {getAccessToken, getCurrentUserProfile, getCurrentUserPlaylists, getTopTracks} from './spotify'
 import { Routes, Route,BrowserRouter} from "react-router-dom"
 import Artists from "./components/Artists"
 import Profile from "./components/Profile"
@@ -10,7 +10,6 @@ function App() {
   const [token, setToken] = useState(null);
   const [profile, setProfile] = useState(null);
   const [playlists, setPlaylists] = useState(null);
-  const [topArtists, setTopArtists] = useState(null);
   const [topTracks, setTopTracks] = useState(null);
   
   useEffect(() => {
@@ -24,13 +23,9 @@ function App() {
         const userPlaylists= await getCurrentUserPlaylists();
         setPlaylists(userPlaylists.data)
 
-        const userTopArtists = await getTopArtists();
-        setTopArtists(userTopArtists.data)
-
         const userTopTracks = await getTopTracks();
         setTopTracks(userTopTracks.data);
 
-        console.log(userTopArtists.data)
         console.log(userTopTracks.data)
       
       } catch(err){
@@ -55,7 +50,7 @@ function App() {
         </a>
         </div>) : (
           <>
-          {(profile && playlists && topArtists) && (
+          {(profile && playlists) && (
 
               // <div>
               //   <Profile profile={profile} playlists={playlists}
@@ -67,7 +62,7 @@ function App() {
               <BrowserRouter>
               <Profile profile={profile} playlists={playlists} />
               <Routes>
-                <Route path="/" element={<Artists artists={topArtists}/>}> </Route>
+                <Route path="/" element={<Artists />}> </Route>
                 <Route path="/tracks" element={<Tracks tracks={topTracks} />}> </Route>
               </Routes>
               <Footer/>
