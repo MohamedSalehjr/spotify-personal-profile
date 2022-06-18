@@ -7,6 +7,7 @@ const [topArtists, setTopArtists] = useState(null);
 const [range, setRange] = useState("short");
 
 
+
 useEffect(() => {
 
     const fetchData = async ( ) => {
@@ -21,11 +22,22 @@ useEffect(() => {
     fetchData();
     
   }, [range])
-    
+
+  const setVar = ( ) => {
+    if(range === "short"){
+        return "This Month"
+    }else if (range === "medium"){
+        return "Last 6 Months"
+    }else if (range === "long"){
+        return "All Time"
+    }
+  }
+
+
 return(
 <div className="mt-8 flex flex-col">
 <div className="flex justify-between">
-<h2 className="ml-8 text-xl font-bold">Top Artists This Month</h2>
+<h2 className="ml-8 text-xl font-bold">Top Artists {setVar()}</h2>
 <div className="flex">
     <p onClick={() => setRange("short")} className=" hover:border-b-2 hover:border-green-400 cursor-pointer mr-2 sm:mr-4">This Month</p>
     <p onClick={() => setRange("medium")} className=" hover:border-b-2 hover:border-green-400 cursor-pointer mr-2 sm:mr-4">Last 6 Months</p>

@@ -15,7 +15,7 @@ function Tracks (props){
                     </div>
                     
             </div>
-        )): (<p>no artists</p>)}
+        )): (<p>No Tracks</p>)}
     
 </div>
 </div>  

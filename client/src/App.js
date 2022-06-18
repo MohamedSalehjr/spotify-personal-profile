@@ -5,6 +5,7 @@ import Artists from "./components/Artists"
 import Profile from "./components/Profile"
 import Footer from "./components/Footer"
 import Tracks from "./components/Tracks"
+import TopPlaylists from "./components/TopPlaylists"
 
 function App() {
   const [token, setToken] = useState(null);
@@ -26,7 +27,7 @@ function App() {
         const userTopTracks = await getTopTracks();
         setTopTracks(userTopTracks.data);
 
-        console.log(userTopTracks.data)
+        console.log(userPlaylists.data)
       
       } catch(err){
         console.error(err);
@@ -64,7 +65,9 @@ function App() {
               <Routes>
                 <Route path="/" element={<Artists />}> </Route>
                 <Route path="/tracks" element={<Tracks tracks={topTracks} />}> </Route>
+                <Route path="/playlists" element={<TopPlaylists playlists={playlists} />}> </Route>
               </Routes>
+              
               <Footer/>
             </BrowserRouter>
              

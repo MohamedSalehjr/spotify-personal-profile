@@ -12,20 +12,18 @@ function Profile (props){
                 <h1 className="mt-2 text-2xl font-bold">{props.profile.display_name}</h1>
                 <div className="flex mt-4">
                     <div className="flex flex-col items-center">
-                        <p> {props.profile.followers.total}</p>
+                        <p className="text-xl text-green-500"> {props.profile.followers.total}</p>
                         <p>Followers</p>
                     </div>
                     <div className="flex flex-col items-center ml-4">
-                        <p> {props.playlists.total} </p>
+                        <p className="text-xl text-green-500"> {props.playlists.total} </p>
                         <p>Playlists</p>
                     </div>
                 </div>
                 <button className="mt-4 left- bg-black py-2 px-4 text-white rounded-full hover:text-green-400" onClick={logout}>log out</button>
               </div>
         </div>
-
     )
-
 }
 
 export default Profile;
