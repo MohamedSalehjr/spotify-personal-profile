@@ -1,14 +1,17 @@
 import {useEffect, useState} from 'react'
-import {getAccessToken, getCurrentUserProfile, getCurrentUserPlaylists, getTopArtists} from './spotify'
-import { Routes, Route} from "react-router-dom"
+import {getAccessToken, getCurrentUserProfile, getCurrentUserPlaylists, getTopArtists, getTopTracks} from './spotify'
+import { Routes, Route,BrowserRouter} from "react-router-dom"
 import Artists from "./components/Artists"
 import Profile from "./components/Profile"
+import Footer from "./components/Footer"
+import Tracks from "./components/Tracks"
 
 function App() {
   const [token, setToken] = useState(null);
   const [profile, setProfile] = useState(null);
   const [playlists, setPlaylists] = useState(null);
   const [topArtists, setTopArtists] = useState(null);
+  const [topTracks, setTopTracks] = useState(null);
   
   useEffect(() => {
     setToken(getAccessToken)
@@ -23,6 +26,12 @@ function App() {
 
         const userTopArtists = await getTopArtists();
         setTopArtists(userTopArtists.data)
+
+        const userTopTracks = await getTopTracks();
+        setTopTracks(userTopTracks.data);
+
+        console.log(userTopArtists.data)
+        console.log(userTopTracks.data)
       
       } catch(err){
         console.error(err);
@@ -48,11 +57,21 @@ function App() {
           <>
           {(profile && playlists && topArtists) && (
 
-              <div>
-                <Profile profile={profile} playlists={playlists}
-                 />
-                 <Artists artists={topArtists} />
-              </div>
+              // <div>
+              //   <Profile profile={profile} playlists={playlists}
+              //    />
+              //    <Artists  artists={topArtists}/>
+              //    <Footer/>
+              // </div>
+
+              <BrowserRouter>
+              <Profile profile={profile} playlists={playlists} />
+              <Routes>
+                <Route path="/" element={<Artists artists={topArtists}/>}> </Route>
+                <Route path="/tracks" element={<Tracks tracks={topTracks} />}> </Route>
+              </Routes>
+              <Footer/>
+            </BrowserRouter>
              
             )}
           
@@ -66,3 +85,4 @@ function App() {
 }
 
 export default App;
+
