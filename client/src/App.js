@@ -37,6 +37,8 @@ function App() {
     
   }, [])
 
+  const LOGIN_URI = process.env.NODE_ENV !== 'production' ? 'http://localhost:8888/login'
+  : 'https://spotify-profile-v2.herokuapp.com/login';
 
   return (
     <div className="App">
@@ -45,7 +47,7 @@ function App() {
           <div className="flex items-center h-screen w-screen">
           <a 
           className="App-link text-xl h-24 rounded-full text-white px-16 py-8 bg-green-500 ml-auto mr-auto hover:bg-green-300"
-          href="http://localhost:8888/login"
+          href={LOGIN_URI}
         >
           Login to Spotify
         </a>
