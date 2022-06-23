@@ -48,7 +48,7 @@ return(
 
 <div className="mt-8 px-12 card-list grid grid-cols-1 sm:grid-cols-2 gap-4">
        {topArtists && topArtists.items.length ? topArtists.items.map((artist, i) => (
-            <div className="flex flex-row items-center" key={i}>
+            <div className="flex flex-row items-center p-4 bg-green-500 rounded" key={i}>
                     <img className="h-24 w-24 rounded-full" src={artist.images[0].url} alt={artist.name}/>
                     <h3 className="ml-4">{artist.name}</h3>
             </div>
